@@ -1,0 +1,6 @@
+/vendor/
+.idea/
+node_modules/
+package-lock.json
+.sass-cache/
+*.DS_Store
