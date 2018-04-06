@@ -18,6 +18,6 @@ Image Banner, Slider Banner or Video Banner
 	* able to add small title
 	* content hover text boxes
 
-3.if slider banner,
+3. if slider banner,
 	* able to add multiple images
 	* contact hover text box support
