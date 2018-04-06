@@ -1,0 +1,22 @@
+{
+  "name": "nishanrandika/unyson-header-banners",
+  "type": "wordpress-plugin",
+  "license": ["GPL-2.0"],
+  
+  "description": "Header banner for WordPress unyson framework",
+  "authors": [
+    {
+      "name": "Nishan Randika",
+      "email": "nishan@eight25media.com",
+      "homepage": "https://github.com/nishanrandika/unyson-header-banners"
+    }
+  ],
+  "keywords": [
+    "wordpress", "composer","wp","unyson","header-banner"
+  ],
+  
+  "require": {
+    "php": ">=5.6" 
+  }
+  
+}
