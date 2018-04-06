@@ -1,0 +1,21 @@
+{
+    "name": "nishanrandika/unyson-banner", 
+    "type": "wordpress-plugin",
+    "license": ["GPL-2.0"],
+    
+    "description": "WP banner plugin",
+    "authors": [
+      {
+        "name": "Nishan Randika",
+        "email": "nishan@eight25media.com",
+        "homepage": "https://github.com/nishanrandika/unyson-banner"
+      }
+    ],
+    "keywords": [
+      "wordpress", "composer","wp","unyson","builder mailer"
+    ],
+    
+    "require": {
+      "php": ">=5.6" 
+    }    
+}
