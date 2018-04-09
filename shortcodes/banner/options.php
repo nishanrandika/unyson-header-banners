@@ -4,9 +4,9 @@ $options = array(
     //Banner Tab
     'tab_banner' => array(
         'type' => 'tab',
-        'title' => __('Banner', 'fw'),
+        'title' => __('Content', 'fw'),
         'options' => array(
-            'e25_image_upload' => array(
+            'image_upload' => array(
                 'type'  => 'multi-picker',
                 'label' => false,
                 'desc'  => false,
@@ -30,10 +30,21 @@ $options = array(
                             'desc'  => __('Either upload a new, or choose an existing image from your media library', 'fw'),
                             'images_only' => true,                    
                         ),
+                        'title' => array(
+                            'type'  => 'wp-editor',
+                            'label' => __('Title', 'fw'),
+                            'desc'  => __('This is the text that appears on your title area', 'fw'),
+                            'size' => 'small',
+                            'wpautop' => true,
+                            'editor_type' => false,
+                        ),
                         'content' => array(
-                            'type' => 'text',
+                            'type'  => 'wp-editor',
                             'label' => __('Content', 'fw'),
-                            'desc' => __('This is the text that appears on your header', 'fw')
+                            'desc'  => __('This is the text that appears on your content area', 'fw'),
+                            'size' => 'small',
+                            'wpautop' => true,
+                            'editor_type' => false, // tinymce, html
                         ),
                         'boxes' => array(
                             'type'  => 'addable-option',
@@ -56,10 +67,21 @@ $options = array(
                                 'keep_ratio' => true
                             )
                         ),
+                        'title' => array(
+                            'type'  => 'wp-editor',
+                            'label' => __('Title', 'fw'),
+                            'desc'  => __('This is the text that appears on your title area', 'fw'),
+                            'size' => 'small',
+                            'wpautop' => true,
+                            'editor_type' => false,
+                        ),
                         'content' => array(
-                            'type' => 'text',
+                            'type'  => 'wp-editor',
                             'label' => __('Content', 'fw'),
-                            'desc' => __('This is the text that appears on your header', 'fw')
+                            'desc'  => __('This is the text that appears on your content area', 'fw'),
+                            'size' => 'small',
+                            'wpautop' => true,
+                            'editor_type' => false,
                         ),
                         'boxes' => array(
                             'type'  => 'addable-option',
@@ -90,17 +112,73 @@ $options = array(
                             'add-button-text' => __('Add', 'fw'),
                             'sortable' => true,
                             'popup-options' => array(
-                                'image' => array(
-                                    'type'  => 'background-image',
-                                    'label' => __('Image', 'fw'),
-                                    'desc'  => __('Either upload a new, or choose an existing image from your media library', 'fw'),
-                                    'images_only' => true,                    
+                                'choose' => array(
+                                    'type'  => 'multi-picker',
+                                    'label' => false,
+                                    'desc'  => false,
+                                    'picker' => array(
+                                        'actions' => array(
+                                            'label'   => __('Choose', 'fw'),
+                                            'type'    => 'radio',
+                                            'choices' => array(
+                                                'image'  => __('Image', 'fw'),
+                                                'video' => __('Video', 'fw')
+                                            ),
+                                            'desc'    => __('Choose a option for your slide', 'fw'),
+                                        )
+                                    ),                                    
+                                    'choices' => array(
+                                        'image' => array(
+                                            'image' => array(
+                                                'type'  => 'background-image',
+                                                'label' => __('Image', 'fw'),
+                                                'desc'  => __('Either upload a new, or choose an existing image from your media library', 'fw'),
+                                                'images_only' => true,                    
+                                            )                                            
+                                        ),
+                                        'video' => array(
+                                            'video' => array(
+                                                'type'  => 'oembed',
+                                                'label' => __('Video URL', '{domain}'),
+                                                'desc'  => __('Insert Video URL to embed this video', 'fw'),
+                                                'preview' => array(
+                                                    'width'  => 300,
+                                                    'height' => 300,
+                                                    'keep_ratio' => true
+                                                )
+                                            ),
+                                            'loop' => array(
+                                                'type' => 'switch',
+                                                'label' => 'Enable Video Loop',
+                                                'desc' => __('Select whether the video should be lopped or not', 'fw'), 
+                                                'true' => array(
+                                                    'value' => 'true',
+                                                    'label' => __('Yes', 'fw'),
+                                                ),
+                                                'false' => array(
+                                                    'value' => 'false',
+                                                    'label' => __('No', 'fw'),
+                                                ),
+                                            ),                                            
+                                        ),
+                                    ),
+                                    'show_borders' => false,
+                                ),                                
+                                'title' => array(
+                                    'type'  => 'wp-editor',
+                                    'label' => __('Title', 'fw'),
+                                    'desc'  => __('This is the text that appears on your title area', 'fw'),
+                                    'size' => 'small',
+                                    'wpautop' => true,
+                                    'editor_type' => false,
                                 ),
-                                'title' => array('type' => 'text'),
                                 'content' => array(
-                                    'type' => 'text',
+                                    'type'  => 'wp-editor',
                                     'label' => __('Content', 'fw'),
-                                    'desc' => __('This is the text that appears on your header', 'fw')
+                                    'desc'  => __('This is the text that appears on your content area', 'fw'),
+                                    'size' => 'small',
+                                    'wpautop' => true,
+                                    'editor_type' => false,
                                 ),
                                 'boxes' => array(
                                     'type'  => 'addable-option',
@@ -123,14 +201,33 @@ $options = array(
     //Style Tab
     'tab_style' => array(
         'type' => 'tab',
-        'title' => __('Banner Style', 'fw'),
+        'title' => __('Content Styles', 'fw'),
         'options' => array(
-            'e25_content_color' => array(
+            'slideshow_size' => array(
+                'type'  => 'select',
+                'label' => __('Slideshow Image Size', 'fw'),
+                'desc'  => __('Choose images size for your slideshow', 'fw'),
+                'choices' => array(
+                    '1030' => __('Large (1030x1030)', 'fw'),
+                    '1500' => __('Extra Large (1500x1500)', 'fw'),
+                ),
+            ),
+            'slideshow_behaviour' => array(
+                'type'  => 'select',
+                'label' => __('Slideshow Image Scrolling', 'fw'),
+                'desc'  => __('Choose the behaviour of the slideshow image when scrolling up or down on the page', 'fw'),
+                'choices' => array(
+                    'scroll' => __('Scroll', 'fw'),
+                    'fixed' => __('Fixed', 'fw'),
+                    'parallax' => __('Parallax', 'fw'),
+                ),
+            ),            
+            'content_color' => array(
                 'type' => 'color-picker',
                 'label' => 'Content Text Color',
                 'desc' => __('This is the text that appears on your slider', 'fw')
             ),
-            'e25_content_shadow' => array(
+            'content_shadow' => array(
                 'type' => 'switch',
                 'label' => 'Content Text shadow',
                 'desc' => __('This is the text that appears on your slider', 'fw'),                
@@ -143,22 +240,22 @@ $options = array(
                     'label' => __('True', 'fw'),
                 ),
             ),
-            'e25_box_text_color' => array(
+            'box_text_color' => array(
                 'type' => 'color-picker',
                 'label' => 'Box Text Color',
                 'desc' => __('This is the text that appears on your slider boxes', 'fw')
             ),
-            'e25_box_hover_background_color' => array(
+            'box_hover_background_color' => array(
                 'type'  => 'rgba-color-picker',
                 'label' => __('Box Background Hover Color', '{domain}'),
                 'desc'  => __('This color appears on your box', '{domain}'),
             ),
-            'e25_box_hover_text_color' => array(
+            'box_hover_text_color' => array(
                 'type' => 'color-picker',
                 'label' => 'Box Text Hover Color',
                 'desc' => __('This color appears on your box content, when hover', 'fw')
             ),
-            'e25_box_border_color' => array(
+            'box_border_color' => array(
                 'type' => 'color-picker',
                 'label' => 'Box Border Color',
                 'desc' => __('This color appears on your box border', 'fw')
@@ -169,11 +266,20 @@ $options = array(
     //Config Tab
     'tab_config' => array(
         'type' => 'tab',
-        'title' => __('Slider Config', 'fw'),
+        'title' => __('Screen Options', 'fw'),
         'options' => array(
+            'slideshow_transition' => array(
+                'type'  => 'select',
+                'label' => __('Slideshow Transition', 'fw'),
+                'desc'  => __('Choose the transition for your slideshow', 'fw'),
+                'choices' => array(
+                    'fade' => __('Fade', 'fw'),
+                    'sidewards' => __('Slide Sidewards', 'fw'),
+                ),
+            ),
             'arrow' => array(
                 'type' => 'switch',
-                'label' => 'Arrows',
+                'label' => 'Slideshow Arrows',
                 'desc' => __('Prev/Next arrows', 'fw'),                
                 'true-choice' => array(
                     'value' => 'true',
@@ -186,7 +292,7 @@ $options = array(
             ),
             'dots' => array(
                 'type' => 'switch',
-                'label' => 'Dots',
+                'label' => 'Slideshow Dots',
                 'desc' => __('Show dot indicators', 'fw'), 
                 'true-choice' => array(
                     'value' => 'true',
@@ -196,20 +302,7 @@ $options = array(
                     'value' => 'false',
                     'label' => __('No', 'fw'),
                 ),                
-            ),
-            'fade' => array(
-                'type' => 'switch',
-                'label' => 'Fade',
-                'desc' => __('Enable fade', 'fw'), 
-                'true-choice' => array(
-                    'value' => 'true',
-                    'label' => __('Yes', 'fw'),
-                ),
-                'false-choice' => array(
-                    'value' => 'false',
-                    'label' => __('No', 'fw'),
-                ),                
-            ),
+            ),         
             'infinite' => array(
                 'type' => 'switch',
                 'label' => 'Infinite',
@@ -225,8 +318,8 @@ $options = array(
             ),
             'autoplay' => array(
                 'type' => 'switch',
-                'label' => 'Autoplay',
-                'desc' => __('Enables autoplay', 'fw'), 
+                'label' => 'Autorotation Active',
+                'desc' => __('Check if the slideshow should rotate by default', 'fw'), 
                 'true-choice' => array(
                     'value' => 'true',
                     'label' => __('Yes', 'fw'),
@@ -239,13 +332,13 @@ $options = array(
             'autoplay_speed' => array(
                 'type' => 'text',
                 'value' => '500',
-                'label' => __('Autoplay Speed', 'fw'),
-                'desc' => __('Autoplay speed in milliseconds', 'fw')
+                'label' => __('Autorotation Speed', 'fw'),
+                'desc' => __('Autorotation speed in milliseconds', 'fw')
             ),
             'speed' => array(
                 'type' => 'text',
                 'value' => '300',
-                'label' => __('Speed', 'fw'),
+                'label' => __('Animation Speed', 'fw'),
                 'desc' => __('Slide/Fade animation speed', 'fw')
             ),            
             'pause_on_hover' => array(
@@ -273,6 +366,24 @@ $options = array(
                     'value' => 'false',
                     'label' => __('No', 'fw'),
                 ),                
+            ),
+            'duration' => array(
+                'type' => 'text',
+                'label' => __('Slider Video Duration', 'fw'),
+                'desc' => __('In the middle of the video set the exact time the video should stop and image slider should start in milliseconds', 'fw')
+            ),
+            'begining' => array(
+                'type' => 'switch',
+                'label' => 'Slider Video Play From Begining',
+                'desc' => __('Play video from begining every time or let it play from stop point', 'fw'), 
+                'true' => array(
+                    'value' => 'true',
+                    'label' => __('Yes', 'fw'),
+                ),
+                'false' => array(
+                    'value' => 'false',
+                    'label' => __('No', 'fw'),
+                ),
             ),
         )
     ),

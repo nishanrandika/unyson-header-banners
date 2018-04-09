@@ -5,8 +5,8 @@
 $cfg = array();
 
 $cfg['page_builder'] = array(
-	'title'       => __( 'Header Banner', 'fw' ),
-	'description' => __( 'Create a banner', 'fw' ),
+	'title'       => __( 'Full Screen Slider', 'fw' ),
+	'description' => __( 'Full Screen Slider', 'fw' ),
 	'tab'         => __( 'E25 Elements', 'fw' ),
 	'popup_size' => 'medium'
 );
