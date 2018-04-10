@@ -275,6 +275,7 @@ $options = array(
                 'choices' => array(
                     'fade' => __('Fade', 'fw'),
                     'sidewards' => __('Slide Sidewards', 'fw'),
+                    'up_down' => __('Slide Up/Down', 'fw'),
                 ),
             ),
             'arrow' => array(

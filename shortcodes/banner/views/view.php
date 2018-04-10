@@ -1,7 +1,7 @@
 <?php if (!defined('FW')) die('Forbidden'); ?>
 
 <?php  if($atts['image_upload']['gadget'] == 'image') { ?>
-
+	<!-- Sigle Image Banner -->
 	<div id="banner_wrapper" style="
 		background-image: url(<?php echo $atts['image_upload']['image']['image']['data']['icon'] ?>);
 	">
@@ -57,11 +57,10 @@
 			</div>
 		</div>
 	</div>
-
 <?php } else if ($atts['image_upload']['gadget'] == 'slider') { 
 		$count = 0;
 	?>
-
+	<!-- Slider Banner -->
 	<div id="slider_wrapper">
 		<?php foreach ( $atts['image_upload']['slider']['group'] as $slider ) : ?>			
 			<?php if($slider['choose']['actions'] == 'image') : ?>
@@ -135,61 +134,91 @@
 
 	<script type="text/javascript">
 		/**
-		 * slider_wrapper
+		 * Slider Wrapper
 		 */
 		jQuery(document).ready(function() {	
 
 			// Fires after first initialization.
 			jQuery('#slider_wrapper').on('init', function(){
+				// Get the element type (video or image)
 				var sl_element = jQuery('[id="sl-0').attr('data-sl');
+				
+				// If element is video, this will play HTML5 video.
 				if (sl_element == 'video') {
 					theSlickVideo.play();
 			  	}
             });	
 
-			// Slick slider
+			// Slick slider.
 			jQuery('#slider_wrapper').slick({
-				arrows: <?php echo ($atts['arrow']) ? 'true' : 'false'; ?>,
-				dots: <?php echo ($atts['dots']) ? 'true' : 'false'; ?>,
-				<?php echo ($atts['slideshow_transition'] == 'fade') ? 'fade: true' : ''; ?>,
-				infinite: <?php echo ($atts['infinite']) ? 'true' : 'false'; ?>,
-				autoplay: <?php echo ($atts['autoplay']) ? 'true' : 'false'; ?>,
-				autoplaySpeed: <?php echo ($atts['autoplay_speed']) ? $atts['autoplay_speed'] : '0'; ?>,
-				speed: <?php echo ($atts['speed']) ? $atts['speed'] : '0'; ?>,
-				pauseOnHover: <?php echo ($atts['pause_on_hover']) ? 'true' : 'false'; ?>,
-				touchMove: <?php echo ($atts['touch_move']) ? 'true' : 'false'; ?>,
+				arrows: <?php echo ($atts['arrow']) ? 'true' : 'false'; ?>, // Prev/Next Arrows.
+				dots: <?php echo ($atts['dots']) ? 'true' : 'false'; ?>, // Show dot indicators.
+				<?php
+					switch ($atts['slideshow_transition']) {
+					    case 'fade':
+					        echo "fade: true"; // Enable fade.
+					        break;
+					    case 'sidewards':
+					        echo "fade: false"; // Default state.
+					        break;
+					    case 'up_down':
+					        echo "vertical: true"; // Vertical slide mode.
+					        break;
+					}
+				?>,
+				infinite: <?php echo ($atts['infinite']) ? 'true' : 'false'; ?>, // Infinite loop sliding.
+				autoplay: <?php echo ($atts['autoplay']) ? 'true' : 'false'; ?>, // Enables Autoplay.
+				autoplaySpeed: <?php echo ($atts['autoplay_speed']) ? $atts['autoplay_speed'] : '0'; ?>, // Autoplay Speed in milliseconds.
+				speed: <?php echo ($atts['speed']) ? $atts['speed'] : '0'; ?>, // Slide/Fade animation speed.
+				pauseOnHover: <?php echo ($atts['pause_on_hover']) ? 'true' : 'false'; ?>, // Pause Autoplay On Hover.
+				touchMove: <?php echo ($atts['touch_move']) ? 'true' : 'false'; ?>, // Enable slide motion with touch.
 			});			
 
-			// Fires after slide change
+			// Fires after slide change.
 			jQuery('#slider_wrapper').on('afterChange', function(event, slick, currentSlide){
 				var sl_element = jQuery('[id="sl-'+ currentSlide +'"]').attr('data-sl');
+			  	
 			  	if (sl_element == 'video') {
+					// Pause slick slider to start HTML5 video.
 					jQuery('#slider_wrapper').slick('slickPause');
+					
+					// Play HTML5 video.
 					theSlickVideo.play();
 					
-					// time function, start video from begining
+					// Time function, start video from begining.
 					<?php if ($atts['duration']) : ?>
+						// use video duration to here.
 						setTimeout(function() {
-			            	theSlickVideo.pause();			            	
+							// Pause HTML5 video.
+			            	theSlickVideo.pause();
+
+			            	// Start slick slider.
 			            	jQuery('#slider_wrapper').slick('slickPlay');			            	
 			            }, <?php echo ($atts['duration']); ?>);
 					<?php endif; ?>
 
+					// Set video currentTime to 0 and start from the begging.
 					<?php if ($atts['begining']) : ?>
 	            		theSlickVideo.currentTime = 0;
 	            	<?php endif; ?>
 			  	}
             });
 
-			document.getElementById('theSlickVideo').addEventListener('ended',myHandler,false);
+			// just check that el is not null before adding an event listener.
+			var el = document.getElementById('theSlickVideo');
+			if(el){
+			  el.addEventListener('ended',slideHandler,false);
+			}
 
-			function myHandler(e) {
+			// Slide Handler function use to start slick slider.
+			function slideHandler(e) {
 				jQuery('#slider_wrapper').slick('slickPlay');
 			}
 		});
 	</script>
 
 <?php } else { ?>
+	<!-- Single Video Banner -->
 	<video autoplay muted loop id="video_wrapper">
 	  	<source src="<?php echo $atts['image_upload']['video']['video'] ?>" type="video/mp4">
 	  	Your browser does not support HTML5 video.
